@@ -18,4 +18,18 @@ class Wrappers {
 	}
 
 	
+	/**
+	 * Manage Delivery Plugin Pipeline Version
+	 *
+	 * @param wrapperContext
+	 */
+	static void pipelineVersionContributor(wrapperContext) {
+		wrapperContext.wrapperNodes << new NodeBuilder().'se.diabol.jenkins.pipeline.PipelineVersionContributor' {
+			versionTemplate("\${POM_VERSION}")
+			updateDisplayName(true)
+		}
+
+	}
+
+	
 }

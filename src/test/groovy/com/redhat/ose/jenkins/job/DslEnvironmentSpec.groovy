@@ -6,6 +6,10 @@ import javaposse.jobdsl.dsl.MemoryJobManagement;
 import javaposse.jobdsl.dsl.ScriptRequest
 import spock.lang.Specification
 
+/**
+ * Tests the script used to build out the delivery pipeline
+ *
+ */
 class DslEnvironmentSpec extends Specification {
 
 	private final def resourcesDir = new File("jobs")
@@ -44,7 +48,7 @@ class DslEnvironmentSpec extends Specification {
 
 				
 		views.size() == 1
-		views.iterator().next().name == "ose-app-pipeline"
+		views.iterator().next().name == "ose-app-delivery-pipeline"
     }
 	
 }

@@ -1,8 +1,7 @@
 import groovy.json.JsonSlurper
 
-import com.redhat.ose.jenkins.JenkinsDslConstants
 import com.redhat.ose.jenkins.job.OseAcceptanceJob
-import com.redhat.ose.jenkins.job.OseDeploymentPipelineView
+import com.redhat.ose.jenkins.job.OseDeliveryPipelineView
 import com.redhat.ose.jenkins.job.OseDevBuildJob
 import com.redhat.ose.jenkins.job.OsePromoteJob
 import com.redhat.ose.jenkins.job.OseTriggerDevJob
@@ -31,13 +30,15 @@ def items = new JsonSlurper().parseText(resource.text)
 items.each {
 	
 	def jsonName = it.name
-	def jsonDescription = it.description ?: "${jsonName} Pipeline"
 	def jsonGitbranch = it.gitBranch ?: "master"
 	def jsonGitProject = it.gitProject
 	def jsonGitOwner = it.gitOwner
 	def jsonUtilGitbranch = it.utilGitBranch ?: "master"
 	def jsonUtilGitProject = it.utilGitProject
 	def jsonUtilGitOwner = it.utilGitOwner
+	def jsonScmPollSchedule = it.scmPollSchedule
+	def jsonMavenDeployRepoUrl = it.mavenDeployRepoUrl
+	def jsonMavenDeployServerId = it.mavenDeployServerId
 	def jsonOseDevTokenCredential = it.oseDevTokenCredential
 	def jsonOseUatTokenCredential = it.oseUatTokenCredential
 	def jsonOseProdTokenCredential = it.oseProdTokenCredential
@@ -55,6 +56,8 @@ items.each {
 	def jsonMavenRootPom = it.mavenRootPom
 	def jsonMavenGoals = it.mavenGoals
 	def jsonAcceptanceurl = it.acceptanceUrl
+	def jsonSlackTokenCredential = it.slackTokenCredential
+	def jsonSlackChannelName = it.slackChannelName
 	
 
 	// Create Prod Promotion
@@ -91,9 +94,12 @@ items.each {
 	
 	// Create Acceptance Test
 	new OseAcceptanceJob(
+		appName: jsonName,
 		jobName: "${jsonName}-acceptance",
 		acceptanceUrl: jsonAcceptanceurl,
 		downstreamProject: "${jsonName}-promote-uat",
+		slackTokenCredential: jsonSlackTokenCredential,
+		slackChannelName: jsonSlackChannelName
 	).create(jobParent)
 	
 	// Create Trigger Job
@@ -114,7 +120,6 @@ items.each {
 		jobName: "${jsonName}-build",
 		gitOwner: jsonGitOwner,
 		gitProject: jsonGitProject,
-		mavenDeployRepo: JenkinsDslConstants.NEXUS_RELEASES_REPO,
 		downstreamProject: "${jsonName}-trigger-dev",
 		gitBranch: jsonGitbranch
 	)
@@ -127,14 +132,25 @@ items.each {
 		oseDevBuildJob.mvnGoals = jsonMavenGoals
 	}
 	
+	if(jsonScmPollSchedule) {
+		oseDevBuildJob.scmPollSchedule = jsonScmPollSchedule
+	}
+	
+	if(jsonMavenDeployRepoUrl) {
+		oseDevBuildJob.mavenDeployRepoUrl =jsonMavenDeployRepoUrl
+	}
+	
+	if(jsonMavenDeployServerId) {
+		oseDevBuildJob.mavenDeployServerId = jsonMavenDeployServerId
+	}
 	
 	oseDevBuildJob.create(jobParent)
 	
 	
-	// Create Build Pipeline
-	new OseDeploymentPipelineView(
-		pipelineName: "${jsonName}-pipeline",
-		pipelineTitle: jsonDescription,
+	// Create Delivery Pipeline
+	new OseDeliveryPipelineView(
+		pipelineName: "${jsonName}",
+		viewName: "${jsonName}-delivery-pipeline",
 		startJob: "${jsonName}-build"
 	).create(jobParent)
 	

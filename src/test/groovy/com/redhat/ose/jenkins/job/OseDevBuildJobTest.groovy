@@ -8,6 +8,10 @@ import javaposse.jobdsl.dsl.JobParent
 import spock.lang.Shared
 import spock.lang.Specification
 
+/**
+ * Tests and validates the creation of the build job
+ *
+ */
 @Mixin(JobSpecMixin)
 class OseDevBuildJobTest extends Specification {
 	
@@ -23,8 +27,10 @@ class OseDevBuildJobTest extends Specification {
 			jobName: "ose-dev-build",
 			gitOwner: "rhtconsulting",
 			gitProject: "ose-app",
-			mavenDeployRepo: JenkinsDslConstants.NEXUS_RELEASES_REPO,
-			downstreamProject: "ose-trigger-dev"
+			mavenDeployServerId: JenkinsDslConstants.MAVEN_DEPLOY_DEFAULT_SERVER_ID,
+			mavenDeployRepoUrl: JenkinsDslConstants.MAVEN_DEPLOY_DEFAULT_REPO_URL,
+			downstreamProject: "ose-trigger-dev",
+			scmPollSchedule: "* * * * *"
 		)
 		
 		when:
@@ -87,6 +93,10 @@ class OseDevBuildJobTest extends Specification {
 				with(configs.'hudson.plugins.parameterizedtrigger.PredefinedBuildParameters') {
 					properties.text() == 'BUILD_PROJECT_VERSION=\${POM_VERSION}'
 				}
+			}
+			
+			with(triggers.'hudson.triggers.SCMTrigger') {
+				spec.text() == "* * * * *"
 			}
 				
 		}

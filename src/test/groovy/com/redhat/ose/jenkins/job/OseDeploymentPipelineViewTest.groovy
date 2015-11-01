@@ -8,6 +8,10 @@ import javaposse.jobdsl.dsl.views.BuildPipelineView;
 import spock.lang.Shared
 import spock.lang.Specification
 
+/**
+ * Tests and validates the creation of the deployment pipeline view
+ *
+ */
 @Mixin(JobSpecMixin)
 class OseDeploymentPipelineViewTest extends Specification {
 	

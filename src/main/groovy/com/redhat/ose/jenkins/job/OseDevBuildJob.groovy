@@ -1,6 +1,7 @@
 package com.redhat.ose.jenkins.job
 
 import com.redhat.ose.jenkins.Publishers
+import com.redhat.ose.jenkins.Wrappers
 
 
 
@@ -23,9 +24,11 @@ class OseDevBuildJob {
 	String gitBranch = "master"
 	String oseMaster
 	String oseProject
+	String scmPollSchedule
 	String oseApp
 	String downstreamProject
-	Map mavenDeployRepo
+	String mavenDeployRepoUrl
+	String mavenDeployServerId
 	String mavenTargets = "build-helper:parse-version versions:set"
 	String mavenName = "maven"
 	String mvnGoals = "clean package"
@@ -46,6 +49,14 @@ class OseDevBuildJob {
 				github(gitOwner + '/' + (gitProject ? gitProject : jobName), gitBranch)
 			}
 			
+			if(scmPollSchedule) {
+				
+				triggers {
+					scm scmPollSchedule
+				}
+				
+			}
+			
 			preBuildSteps {
 				maven {
 					mavenInstallation(mavenName)
@@ -58,8 +69,8 @@ class OseDevBuildJob {
 			publishers {
 				
 				// Deploy artifacts to repository
-				if(mavenDeployRepo) {
-					Publishers.deployArtifacts(mavenDeployRepo.get('id'), mavenDeployRepo.get('url'), delegate)
+				if(mavenDeployRepoUrl) {
+					Publishers.deployArtifacts(mavenDeployServerId, mavenDeployRepoUrl, delegate)
 				}
 				
 				// Trigger downstream build
@@ -73,7 +84,6 @@ class OseDevBuildJob {
 
 
 			}
-			
 
 			configure { node ->
 				node / runPostStepsIfResult {

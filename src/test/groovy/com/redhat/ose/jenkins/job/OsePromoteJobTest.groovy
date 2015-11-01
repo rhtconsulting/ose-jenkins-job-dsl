@@ -6,6 +6,10 @@ import javaposse.jobdsl.dsl.JobParent
 import spock.lang.Shared
 import spock.lang.Specification
 
+/**
+ * Tests and validates the creation of the promotion job
+ *
+ */
 @Mixin(JobSpecMixin)
 class OsePromoteJobTest extends Specification {
 	

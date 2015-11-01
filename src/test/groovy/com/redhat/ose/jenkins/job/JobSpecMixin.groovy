@@ -6,7 +6,10 @@ import javaposse.jobdsl.dsl.JobParent
 import javaposse.jobdsl.dsl.MemoryJobManagement
 
 
-
+/**
+ * Project level Groovy Mixins
+ *
+ */
 class JobSpecMixin {
 
 	JobParent createJobParent() {

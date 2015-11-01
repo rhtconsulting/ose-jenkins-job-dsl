@@ -6,6 +6,10 @@ import javaposse.jobdsl.dsl.JobParent
 import spock.lang.Shared
 import spock.lang.Specification
 
+/**
+ * Tests and validates the creation of the developement trigger job
+ *
+ */
 @Mixin(JobSpecMixin)
 class OseTriggerDevJobTest extends Specification {
 	
