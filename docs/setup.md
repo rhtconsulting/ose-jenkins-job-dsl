@@ -32,10 +32,13 @@ The Jenkins [Job DSL Plugin](https://wiki.jenkins-ci.org/display/JENKINS/Job+DSL
                 "acceptanceUrl": "http://ose-app-dev.apps.example.com/rest/forge/events",
                 "srcAppUrl": "http://<ip-address>/nexus/service/local/artifact/maven/redirect?r=public&g=org.jboss.examples&a=ticket-monster&v=${BUILD_PROJECT_VERSION}&p=war",
                 "slackTokenCredential": "slack-token",
-                "slackChannelName": "#openshift-dev"
+                "slackChannelName": "#openshift-dev",
+                "cicdType": "pipeline"
         }
 ]
 ```
+
+An important distinction is the *cicdType* property which will determine whether the CICD process will utilize the Jenkins Build Pipeline Plugin or Workflow plugin. Use **pipeline** for the Build Pipeline Plugin or **workflow** for the Workflow plugin
 
 ### Configuring the Seed Job
 
@@ -100,11 +103,11 @@ The following is an example of a such file
 		"gitOwner": "sabre1041",
 		"gitProject": "ticket-monster-webinar",
 		"gitBranch": "ose-webinar",
-                "mavenRootPom": "demo/pom.xml",
-                "utilGitOwner": "sabre1041",
+ 		"mavenRootPom": "demo/pom.xml",
+ 		"utilGitOwner": "sabre1041",
 		"utilGitProject": "ose3-samples",
-                "mavenDeployRepoUrl": "http://127.0.0.1:8081/nexus/content/repositories/releases",
-                "mavenDeployServerId": "nexus",
+ 		"mavenDeployRepoUrl": "http://127.0.0.1:8081/nexus/content/repositories/releases",
+ 		"mavenDeployServerId": "nexus",
 		"oseDevTokenCredential": "ose-token-dev",
 		"oseUatTokenCredential": "ose-token-uat",
 		"oseProdTokenCredential": "ose-token-prod",
@@ -118,10 +121,10 @@ The following is an example of a such file
 		"oseAppUat": "ticket-monster",
 		"oseAppProd": "ticket-monster",
 		"oseDevMaster": "master.ose.labs.redhat.com",
-                "acceptanceUrl": "http://ose-app-dev.apps.ose.example.com/rest/forge/events",
+ 		"acceptanceUrl": "http://ose-app-dev.apps.ose.example.com/rest/forge/events",
 		"srcAppUrl": "http://cicd.ose.example.com/nexus/service/local/artifact/maven/redirect?r=public&g=org.jboss.examples&a=ticket-monster&v=${BUILD_PROJECT_VERSION}&p=war",
-                "slackTokenCredential": "slack-token",
-                "slackChannelName": "#openshift-dev"
+ 		"slackTokenCredential": "slack-token",
+ 		"slackChannelName": "#openshift-dev"
 	}
 ]
 ```

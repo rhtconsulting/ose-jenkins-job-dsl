@@ -88,7 +88,7 @@ class OsePromoteJobTest extends Specification {
 
                   # Pull Image from Source Environment
 
-                  sh \${WORKSPACE}/ose-docker-push-pull-operations.sh -o=pull -h=\${OSE_REGISTRY_SRC} -u=jenkins -t=\${OSE_SRC_SERVICE_ACCOUNT_TOKEN} -n=\${OSE_PROJECT_SRC} -a=\${OSE_APP_SRC} 
+                  sh \${WORKSPACE}/ose-docker-push-pull-operations.sh -o=pull -h=\${OSE_REGISTRY_SRC} -u=\${OSE_REGISTRY_USER_SRC} -t=\${OSE_SRC_SERVICE_ACCOUNT_TOKEN} -n=\${OSE_PROJECT_SRC} -a=\${OSE_APP_SRC} 
 
                   # Tag Image for Destination Environment
 
@@ -96,7 +96,7 @@ class OsePromoteJobTest extends Specification {
 
                  # Push Image to Destination Environment 
 
-                 sh \${WORKSPACE}/ose-docker-push-pull-operations.sh -o=push -h=\${OSE_REGISTRY_DEST} -u=jenkins -t=\${OSE_DEST_SERVICE_ACCOUNT_TOKEN} -n=\${OSE_PROJECT_DEST} -a=\${OSE_APP_DEST}
+                 sh \${WORKSPACE}/ose-docker-push-pull-operations.sh -o=push -h=\${OSE_REGISTRY_DEST} -u=\${OSE_REGISTRY_USER_DEST} -t=\${OSE_DEST_SERVICE_ACCOUNT_TOKEN} -n=\${OSE_PROJECT_DEST} -a=\${OSE_APP_DEST}
 
                  # Delete Images
 
@@ -120,31 +120,37 @@ class OsePromoteJobTest extends Specification {
 			it[0].defaultValue.text() == ''
 			it[0].description.text() == 'Build version of the Project'
 
-			
 			it[1].name.text() == 'OSE_REGISTRY_SRC'
 			it[1].defaultValue.text() == 'registry.dev.ose.example.com'
 			it[1].description.text() == 'OpenShift Source Environment Host'
-			
-			
-			it[2].name.text() == 'OSE_REGISTRY_DEST'
-			it[2].defaultValue.text() == 'registry.prod.ose.example.com'
-			it[2].description.text() == 'OpenShift Destination Environment Host'
 
-			it[3].name.text() == 'OSE_PROJECT_SRC'
-			it[3].defaultValue.text() == 'jenkins-dsl'
-			it[3].description.text() == 'OpenShift Project for the Source Environment'
+			it[2].name.text() == 'OSE_REGISTRY_USER_SRC'
+			it[2].defaultValue.text() == 'jenkins'
+			it[2].description.text() == 'OpenShift Source Username'
 			
-			it[4].name.text() == 'OSE_APP_SRC'
-			it[4].defaultValue.text() == 'dsl-app'
-			it[4].description.text() == 'OpenShift App for the Source Environment'	
+			it[3].name.text() == 'OSE_REGISTRY_DEST'
+			it[3].defaultValue.text() == 'registry.prod.ose.example.com'
+			it[3].description.text() == 'OpenShift Destination Environment Host'
 			
-			it[5].name.text() == 'OSE_PROJECT_DEST'
+			it[4].name.text() == 'OSE_REGISTRY_USER_DEST'
+			it[4].defaultValue.text() == 'jenkins'
+			it[4].description.text() == 'OpenShift Destination Username'
+
+			it[5].name.text() == 'OSE_PROJECT_SRC'
 			it[5].defaultValue.text() == 'jenkins-dsl'
-			it[5].description.text() == 'OpenShift Project for the Destination Environment'
+			it[5].description.text() == 'OpenShift Project for the Source Environment'
 			
-			it[6].name.text() == 'OSE_APP_DEST'
+			it[6].name.text() == 'OSE_APP_SRC'
 			it[6].defaultValue.text() == 'dsl-app'
-			it[6].description.text() == 'OpenShift App for the Destination Environment'
+			it[6].description.text() == 'OpenShift App for the Source Environment'	
+			
+			it[7].name.text() == 'OSE_PROJECT_DEST'
+			it[7].defaultValue.text() == 'jenkins-dsl'
+			it[7].description.text() == 'OpenShift Project for the Destination Environment'
+			
+			it[8].name.text() == 'OSE_APP_DEST'
+			it[8].defaultValue.text() == 'dsl-app'
+			it[8].description.text() == 'OpenShift App for the Destination Environment'
 	
 		}
 				

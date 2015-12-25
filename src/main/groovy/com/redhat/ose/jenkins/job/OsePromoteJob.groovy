@@ -16,7 +16,9 @@ class OsePromoteJob {
 	String gitProject
 	String gitBranch = "master"
 	String oseRegistrySrc
+	String oseRegistryUserSrc = "jenkins"
 	String oseRegistryDest
+	String oseRegistryUserDest = "jenkins"
 	String oseProjectSrc
 	String oseProjectDest
 	String oseAppSrc
@@ -35,7 +37,9 @@ class OsePromoteJob {
 			parameters {
 				stringParam "BUILD_PROJECT_VERSION",null,"Build version of the Project"
 				stringParam "OSE_REGISTRY_SRC",oseRegistrySrc,"OpenShift Source Environment Host"
+				stringParam "OSE_REGISTRY_USER_SRC",oseRegistryUserSrc,"OpenShift Source Username"
 				stringParam "OSE_REGISTRY_DEST",oseRegistryDest,"OpenShift Destination Environment Host"
+				stringParam "OSE_REGISTRY_USER_DEST",oseRegistryUserDest,"OpenShift Destination Username"
 				stringParam "OSE_PROJECT_SRC",oseProjectSrc, "OpenShift Project for the Source Environment"
 				stringParam "OSE_APP_SRC",oseAppSrc, "OpenShift App for the Source Environment"
 				stringParam "OSE_PROJECT_DEST",oseProjectDest, "OpenShift Project for the Destination Environment"
@@ -56,7 +60,7 @@ class OsePromoteJob {
 
                   # Pull Image from Source Environment
 
-                  sh \${WORKSPACE}/ose-docker-push-pull-operations.sh -o=pull -h=\${OSE_REGISTRY_SRC} -u=jenkins -t=\${OSE_SRC_SERVICE_ACCOUNT_TOKEN} -n=\${OSE_PROJECT_SRC} -a=\${OSE_APP_SRC} 
+                  sh \${WORKSPACE}/ose-docker-push-pull-operations.sh -o=pull -h=\${OSE_REGISTRY_SRC} -u=\${OSE_REGISTRY_USER_SRC} -t=\${OSE_SRC_SERVICE_ACCOUNT_TOKEN} -n=\${OSE_PROJECT_SRC} -a=\${OSE_APP_SRC} 
 
                   # Tag Image for Destination Environment
 
@@ -64,7 +68,7 @@ class OsePromoteJob {
 
                  # Push Image to Destination Environment 
 
-                 sh \${WORKSPACE}/ose-docker-push-pull-operations.sh -o=push -h=\${OSE_REGISTRY_DEST} -u=jenkins -t=\${OSE_DEST_SERVICE_ACCOUNT_TOKEN} -n=\${OSE_PROJECT_DEST} -a=\${OSE_APP_DEST}
+                 sh \${WORKSPACE}/ose-docker-push-pull-operations.sh -o=push -h=\${OSE_REGISTRY_DEST} -u=\${OSE_REGISTRY_USER_DEST} -t=\${OSE_DEST_SERVICE_ACCOUNT_TOKEN} -n=\${OSE_PROJECT_DEST} -a=\${OSE_APP_DEST}
 
                  # Delete Images
 

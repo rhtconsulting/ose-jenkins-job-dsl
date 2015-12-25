@@ -14,7 +14,7 @@ class DslEnvironmentSpec extends Specification {
 
 	private final def resourcesDir = new File("jobs")
 	
-	def 'Verify logic'() {
+	def 'Verify pipeline'() {
         		
 		def paramMap = [:]
 		
@@ -50,5 +50,34 @@ class DslEnvironmentSpec extends Specification {
 		views.size() == 1
 		views.iterator().next().name == "ose-app-delivery-pipeline"
     }
-	
+
+	def 'Verify workflow'() {
+
+	def paramMap = [:]
+
+	when:
+	MemoryJobManagement jm = [
+		getOutputStream: { System.out },
+		queueJob: {}
+	] as MemoryJobManagement
+
+	// Set parameters
+	jm.parameters.put("FILE_NAME", "src/test/resources/testworkflowjobs.json")
+
+	ScriptRequest request = new ScriptRequest('DslEnvironmentGenerator.groovy', null, resourcesDir.toURL(), false);
+
+	def dsl = DslScriptLoader.runDslEngine(request, jm)
+	def jobs = dsl.jobs
+	def views = dsl.views
+
+	then:
+	jobs != null
+
+	jobs.size() == 1
+	def jobsIt = jobs.iterator()
+
+	jobsIt.next().jobName == 'ose-app-workflow'
+
+	}
+
 }

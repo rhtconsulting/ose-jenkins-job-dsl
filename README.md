@@ -21,14 +21,15 @@ The following jobs are available
 2. OseTriggerDevJob - Updates the *SRC_APP_URL* environment variable of the BuildConfig within OpenShift and triggers a new build in OpenShift
 3. OseAcceptanceJob - Performs an acceptance test within OpenShift to verify a Restful services endpoint is active (Can be omitted by not specifying an acceptance url in the configuration)
 4. OsePromoteJob - Promotion of an image within the Integrated Docker registry from one environment/project to another
+5. OseWorkflowJob - Builds a CI/CD process using the Jenkins [Workflow Plugin](https://wiki.jenkins-ci.org/display/JENKINS/Workflow+Plugin)
 
 ## Views
 
-Visualizing of the chaining of jobs is facilitated using the [Delivery Pipeline Plugin](https://wiki.jenkins-ci.org/display/JENKINS/Delivery+Pipeline+Plugin). The *OseDeploymentPipelineView* script will produce a new pipeline view
+Visualizing of the chaining of jobs is facilitated using the [Delivery Pipeline Plugin](https://wiki.jenkins-ci.org/display/JENKINS/Delivery+Pipeline+Plugin). The *OseDeploymentPipelineView* job will produce a new pipeline view
 
 ## Getting Started
 
-Setting up the deployment pipeline can be completed in a few simple steps. Please see the [setup document](docs/setup.md) and [prerequisites](docs/prerequisites.md)on how to configure your environment
+Setting up the deployment pipeline can be completed in a few simple steps. Please see the [setup document](docs/setup.md) and [prerequisites](docs/prerequisites.md) on how to configure your environment
 
 ## ChatOps
 
@@ -42,6 +43,7 @@ The following parameters can be added to the configuration file based on the id 
 
 ```
 "slackTokenCredential": "slack-token",
-"slackChannelName": "#openshift-dev"
+"slackChannelName": "#openshift-dev",
+"slackUsername": "jenkins"
 ```
 

@@ -8,6 +8,7 @@ class OseDeliveryPipelineView {
 	
 
 	String viewName
+	String folder
 	String pipelineName
 	Integer noDisplayedBuilds = 3
 	String initialJob
@@ -15,10 +16,10 @@ class OseDeliveryPipelineView {
 	String startJob
 	
 	def create(jobParent) {
-				
-		pipelineName = pipelineName ?: viewName
-		
-		jobParent.deliveryPipelineView("${viewName}") {
+			
+		def pName = folder != null ? "/${folder}/${viewName}" : "${viewName}"
+
+		jobParent.deliveryPipelineView("${pName}") {
 			
 			execute {
 				it / allowRebuild(true)
