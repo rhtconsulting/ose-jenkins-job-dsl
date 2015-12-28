@@ -22,15 +22,14 @@ class OseDeliveryPipelineView {
 		jobParent.deliveryPipelineView("${pName}") {
 			
 			execute {
-				it / allowRebuild(true)
-				it / allowPipelineStart(true)
-				it / showDescription(true)
-				it / showPromotions(true)
 				it / displayedBuilds(noDisplayedBuilds)
-				it / showTotalBuildTime(true)
 			}
 			
-
+			allowRebuild(true)
+			allowPipelineStart(true)
+			showDescription(true)
+			showPromotions(true)
+			showTotalBuildTime(true)
 			columns(1)
 			enableManualTriggers(manualTrigger)
 			pipelineInstances(3)

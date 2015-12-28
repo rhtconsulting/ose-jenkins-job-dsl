@@ -35,12 +35,11 @@ class OseDeliveryPipelineViewTest extends Specification {
 		
 		DeliveryPipelineView deliveryPipelineView = jobParent.referencedViews.first()
 		
-		
 		// Print out resulting xml for debug testing
 		//println deliveryPipelineView.xml
 
 		deliveryPipelineView.name == 'ose-promote-view'
-		Node project = deliveryPipelineView.node
+		Node project = deliveryPipelineView.getNode()
 
 		with(project) {
 

@@ -224,7 +224,7 @@ class OseAcceptanceJobTest extends Specification {
 		// Credential Binding
 		with(project.buildWrappers.'org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper'.bindings.'org.jenkinsci.plugins.credentialsbinding.impl.StringBinding'[0]) {
 			variable.text() == "SLACK_TOKEN"
-			credentialsId.text() == "59761824-48b8-49d9-9318-4755a0dc0601"
+			credentialsId.text() == "slack-token"
 		}
 		
 		// Chat Post Build

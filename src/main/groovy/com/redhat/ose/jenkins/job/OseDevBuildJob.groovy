@@ -77,7 +77,9 @@ class OseDevBuildJob {
 				downstreamParameterized {
 					
 					trigger("${downstreamProject}") {
+						parameters {
 							predefinedProp("BUILD_PROJECT_VERSION", "\${POM_VERSION}")
+						}
 					}
 				}
 				

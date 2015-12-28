@@ -70,7 +70,9 @@ class OseTriggerDevJob {
 				downstreamParameterized {
 					
 					trigger("${downstreamProject}") {
+						parameters {
 							predefinedProp("BUILD_PROJECT_VERSION", "\${BUILD_PROJECT_VERSION}")
+						}
 					}
 				}
 			}

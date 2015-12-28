@@ -20,12 +20,7 @@ class JobSpecMixin {
 			}
 		}
 		
-		def jm = [ getCredentialsId: { c -> 
-			
-			CredentialManager.lookupCredential(c)
-			
-			 } ] as MemoryJobManagement
-		jp.setJm(jm)
+		jp.setJm(new MemoryJobManagement())
 		
 		jp
 		
