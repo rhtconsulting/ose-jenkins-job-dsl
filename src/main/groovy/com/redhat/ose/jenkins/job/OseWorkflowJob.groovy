@@ -199,47 +199,61 @@ class OseWorkflowJob {
 	     
 				sh \"\"\"
 				
-				set +x
-	
-				MAX_ATTEMPTS=100
-				DELAY=5
-				COUNTER=0
-	
-				echo -n "Attempting to Verify Application "
-	
-				while [ \\\$COUNTER -lt \\\$MAX_ATTEMPTS ]
-				do
-	
-					RESPONSE=\\\$(curl -s -o /dev/null -w '%{http_code}\n' ${acceptanceUrl})
-	
-					if [ \\\$RESPONSE -eq 200 ]; then
-						echo 
-						echo 
-						echo "Application Verified"
-						exit 0
-					fi
-	
-					echo -n \".\"
-					COUNTER=\\\$(( \\\$COUNTER + 1 ))
-	
-					sleep \\\$DELAY
-	
+					set +x
+		
+					MAX_ATTEMPTS=100
+					DELAY=5
+					COUNTER=0
+		
+					echo -n "Attempting to Verify Application "
+		
+					while [ \\\$COUNTER -lt \\\$MAX_ATTEMPTS ]
+					do
+		
+						RESPONSE=\\\$(curl -s -o /dev/null -w '%{http_code}\n' ${acceptanceUrl})
+		
+						if [ \\\$RESPONSE -eq 200 ]; then
+							echo 
+							echo 
+							echo "Application Verified"
+							exit 0
+						fi
+		
+						echo -n \".\"
+						COUNTER=\\\$(( \\\$COUNTER + 1 ))
+		
+						sleep \\\$DELAY
+
 					done
-	
+
 					echo 
 					echo "Error: Application Could Not Be Verified After \\\$COUNTER Attempts"
 					exit 1
 	     
 					\"\"\"
-	    
+
+					"""
+					
+					if(slackTokenCredential && slackChannelName) {
+	
+						acceptanceStep += """
+
 					withCredentials([[\$class: 'StringBinding', credentialsId: "${slackTokenCredential}", variable: 'slackToken']]) {
 	        
 						sh "curl https://slack.com/api/chat.postMessage --data-urlencode token=\${env.slackToken} --data-urlencode channel=\\\'${slackChannelName}\\\' --data-urlencode \\\"username=${slackUsername}\\\" --data-urlencode \'icon_url=http://www.yolinux.com/TUTORIALS/images/Jenkins/Jenkins_logo.png\' --data-urlencode \'attachments=[{\\\"fallback\\\": \\\"${appName} \${BUILD_PROJECT_VERSION} Ready to Deploy to UAT - http://10.3.9.43/jenkins/\\\",\\\"pretext\\\": \\\"Jenkins ${appName} Notification\\\",\\\"title\\\": \\\"${appName} \${BUILD_PROJECT_VERSION} Ready to Deploy to UAT\\\",\\\"title_link\\\": \\\"http://10.3.9.43/jenkins\\\",\\\"text\\\": \\\"Click the link above to view the job in Jenkins\\\",\\\"color\\\": \\\"#7CD197\\\"}]\'"
 	       
 					}
+
+						"""
+					}
+
+					acceptanceStep += """
 	
 				}
-			"""
+	
+			}
+	
+				"""
 			
 			acceptanceStep 
 		}
