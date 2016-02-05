@@ -20,7 +20,7 @@
 		<maven.surefire.plugin.version>2.18.1</maven.surefire.plugin.version>
 		<build.helper.maven.plugin.version>1.9.1</build.helper.maven.plugin.version>
 		<spock.core.version>0.7-groovy-2.0</spock.core.version>
-		<job.dsl.core.version>1.37</job.dsl.core.version>
+		<job.dsl.core.version>1.41</job.dsl.core.version>
 		<objenesis.version>2.1</objenesis.version>
 		<codenarc.version>0.20</codenarc.version>
   </properties>

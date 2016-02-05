@@ -83,7 +83,7 @@ class OseTriggerDevJobTest extends Specification {
 			// Credential Binding
 			with(buildWrappers.'org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper'.bindings.'org.jenkinsci.plugins.credentialsbinding.impl.StringBinding') {
 				variable.text() == "OSE_SERVICE_ACCOUNT_TOKEN"
-				credentialsId.text() == "e72e16c7e42f292c6912e7710c838347ae178b4a"
+				credentialsId.text() == "ose-token-dev"
 			}
 			
 			equalsIgnoreWhitespace builders."hudson.tasks.Shell"[0].command.text(), '''

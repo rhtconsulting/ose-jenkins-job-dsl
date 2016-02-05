@@ -1,0 +1,28 @@
+[
+        {
+                "name": "ose-app",
+                "gitOwner": "sabre1041",
+                "gitProject": "ose-app",
+                "gitBranch": "ose-webinar",
+                "mavenRootPom": "demo/pom.xml",
+                "utilGitOwner": "sabre1041",
+                "utilGitProject": "ose3-samples",
+                "oseDevTokenCredential": "ose-token-dev",
+                "oseUatTokenCredential": "ose-token-uat",
+                "oseProdTokenCredential": "ose-token-prod",
+                "oseRegistryDev": "registry.apps.ose.example.com",
+                "oseRegistryUat": "registry.apps.ose.example.com",
+                "oseRegistryProd": "registry.apps.ose.example.com",
+                "oseProjectDev": "ose-app-dev",
+                "oseProjectUat": "ose-app-uat",
+                "oseProjectProd": "ose-app-prod",
+                "oseAppDev": "ose-app",
+                "oseAppUat": "ose-app",
+                "oseAppProd": "ose-app",
+                "oseDevMaster": "master.ose.example.com",
+                "srcAppUrl": "http://127.0.0.1/nexus/service/local/artifact/maven/redirect?r=public&g=org.jboss.examples&a=ticket-monster&v=${BUILD_PROJECT_VERSION}&p=war",
+                "slackTokenCredential": "slack-token",
+                "slackChannelName": "#openshift-dev",
+                "cicdType": "workflow"
+        }
+]

@@ -26,9 +26,9 @@ class OseTriggerDevJob {
 	Map mavenDeployRepo
 	
 	def create(jobParent) {
-				
+
 		def jName = folder != null ? "/${folder}/${jobName}" : "${jobName}"
-		
+
 		jobParent.job(jName) {
 			
 			parameters {
@@ -70,7 +70,9 @@ class OseTriggerDevJob {
 				downstreamParameterized {
 					
 					trigger("${downstreamProject}") {
+						parameters {
 							predefinedProp("BUILD_PROJECT_VERSION", "\${BUILD_PROJECT_VERSION}")
+						}
 					}
 				}
 			}

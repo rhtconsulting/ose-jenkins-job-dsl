@@ -24,6 +24,35 @@ The [JQ](https://stedolan.github.io/jq/manual/) JSON parsing library is used to 
 
 ### Maven  
 
+Several of the dependencies included in this project are not found in Maven Central and instead found in the [Jenkins Maven Repository Server](https://wiki.jenkins-ci.org/display/JENKINS/Jenkins+Maven+Repository+Server).
+
+Add the following inside the *profiles* section of the Maven *settings.xml* file
+
+```
+<profile>
+    <id>jenkins</id>
+    <repositories>
+        <repository>
+            <id>jenkins</id>
+            <url>http://repo.jenkins-ci.org/public/</url>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>jenkins</id>
+            <name>Jenkins Repository</name>
+            <url>http://repo.jenkins-ci.org/public/</url>
+        </pluginRepository>
+    </pluginRepositories>
+</profile>
+```
+
+Next add the profile inside the *ActiveProfiles* section:
+
+```
+<activeProfile>jenkins</activeProfile>
+```
+
 Jenkins is configured to publish artifacts produced from the build to an artifact repository. By default, it uses values configured in *servers* section of the Maven *settings.xml* file for authentication. 
 
 ```

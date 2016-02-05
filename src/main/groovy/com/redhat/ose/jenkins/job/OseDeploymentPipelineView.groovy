@@ -7,6 +7,7 @@ package com.redhat.ose.jenkins.job
 class OseDeploymentPipelineView {
 	
 	String pipelineName
+	String folder
 	String pipelineTitle
 	Integer noDisplayedBuilds = 3
 	String initialJob
@@ -14,9 +15,11 @@ class OseDeploymentPipelineView {
 	String startJob
 	
 	def create(jobParent) {
-				
-		jobParent.buildPipelineView("${pipelineName}") {
-			
+
+		def pName = folder != null ? "/${folder}/${pipelineName}" : "${pipelineName}"
+
+		jobParent.buildPipelineView("${pName}") {
+
 			title(pipelineTitle)
 			displayedBuilds(noDisplayedBuilds)
 			alwaysAllowManualTrigger(manualTrigger)
