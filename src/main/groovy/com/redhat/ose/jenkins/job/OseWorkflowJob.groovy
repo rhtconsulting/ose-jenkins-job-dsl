@@ -251,8 +251,6 @@ class OseWorkflowJob {
 	
 				}
 	
-			}
-	
 				"""
 			
 			acceptanceStep 
